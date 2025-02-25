@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserNotificationSenderImpl implements UserNotificationSender {
 
-    @Value("${spring.kafka.user-deleted-topic-name}")
+    @Value("${spring.kafka.topics.user-deleted-topic-name}")
     private String userDeletedTopicName;
 
     private final KafkaTemplate<String, Long> kafkaTemplate;

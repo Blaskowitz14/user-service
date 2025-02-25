@@ -3,14 +3,13 @@ package ru.blaskowitz.userservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.blaskowitz.userservice.event.UserDeletedEvent;
 import ru.blaskowitz.userservice.exception.UserCreationException;
 import ru.blaskowitz.userservice.exception.UserNotFoundException;
 import ru.blaskowitz.userservice.model.User;
 import ru.blaskowitz.userservice.repository.UserRepository;
+import ru.blaskowitz.userservice.sender.UserNotificationSender;
 
 @Slf4j
 @Service
@@ -18,7 +17,7 @@ import ru.blaskowitz.userservice.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    private final UserNotificationSender userNotificationSender;
 
     @Override
     @Transactional
@@ -45,6 +44,6 @@ public class UserServiceImpl implements UserService {
         User userToDelete = getUser(id);
         userToDelete.setIsDeleted(true);
         userRepository.save(userToDelete);
-        eventPublisher.publishEvent(new UserDeletedEvent(this, id));
+        userNotificationSender.sendUserDeletedNotification(id);
     }
 }
