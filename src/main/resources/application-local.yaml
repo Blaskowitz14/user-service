@@ -17,7 +17,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     topics:
-      user-deleted-topic-name: user-deleted-topic
+      user-deleted: user-deleted-topic
     consumer:
       group-id: "user-service-${random.uuid}"
 

@@ -15,7 +15,7 @@ public class UserNotificationListenerImpl implements UserNotificationListener {
     private final CacheManager cacheManager;
 
     @Override
-    @KafkaListener(topics = "${spring.kafka.topics.user-deleted-topic-name}",
+    @KafkaListener(topics = "${spring.kafka.topics.user-deleted}",
             containerFactory = "kafkaListenerContainerFactory")
     public void onUserDeletedNotification(Long userId) {
         log.info("received user deleted notification: {}", userId);
